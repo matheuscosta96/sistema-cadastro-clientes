@@ -2,7 +2,7 @@
 
 Sistema de cadastro de clientes desenvolvido em **Python**, utilizando conceitos de programação estruturada e execução através do terminal.
 
-Este projeto faz parte do meu processo de aprendizado em Python e tem como objetivo praticar lógica de programação, funções, listas, estruturas condicionais e tratamento de erros.
+Este projeto faz parte do meu processo de aprendizado em Python e tem como objetivo praticar lógica de programação, funções, listas, dicionários, estruturas condicionais e tratamento de erros.
 
 ## 🚀 Funcionalidades
 
@@ -11,6 +11,7 @@ Este projeto faz parte do meu processo de aprendizado em Python e tem como objet
 * Pesquisar clientes
 * Excluir clientes
 * Contar a quantidade de clientes
+* Alterar clientes
 * Impedir o cadastro de clientes duplicados
 * Validar entradas numéricas do menu
 * Exibir mensagens de erro para opções inválidas
@@ -75,7 +76,8 @@ SISTEMA DE CLIENTES
 3 - Pesquisar cliente
 4 - Excluir cliente
 5 - Quantidade de clientes
-6 - Sair
+6 - Alterar cliente
+7 - Sair
 ```
 
 ## 🎯 Objetivo do projeto
