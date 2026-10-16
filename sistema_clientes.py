@@ -49,7 +49,8 @@ def exibir_menu():
     print("3 - Pesquisar cliente")
     print("4 - Excluir cliente")
     print("5 - Quantidade de cliente")
-    print("6 - Sair\n")
+    print("6 - Alterar cliente")
+    print("7 - Sair\n")
 
 
 # ============================================================
@@ -185,21 +186,21 @@ def cadastrar_cliente(clientes):
     # vira:
     #
     # "Matheus"
-    cliente = input("Digite o nome do cliente: ").strip()
-
-    # Procura se o nome já existe.
-    #
-    # A função buscar_nome vai retornar:
-    #
-    # "Matheus" → se encontrar
-    # None      → se não encontrar
+    #variavel cliente vazio para fazer a validação do loop
+    cliente = ""
     nome_encontrado = buscar_nome(clientes, cliente)
+    #enquanto a variavel cliente for vazio ele entra no while e informa erro nome vazio e volta a pedir nome do cliente
+    while cliente == "" or nome_encontrado is not None:
+        cliente = input("Digite o nome do cliente: ").strip()
+        
+        
+        nome_encontrado = buscar_nome(clientes, cliente)
+        
 
-    # Verifica se a função encontrou algum cliente.
-    if nome_encontrado:
-
-        # Se encontrou, não cadastra novamente.
-        print(f"\nCliente {nome_encontrado} já cadastrado.\n")
+        #se nome for vazio informa erro
+        if cliente == "" or nome_encontrado is not None:
+            print("Erro: Nome vazio ou já cadastrado.")
+            
 
     else:
 
@@ -208,6 +209,8 @@ def cadastrar_cliente(clientes):
 
         # Mostra mensagem de sucesso.
         print(f"\nCliente {cliente} cadastrado com sucesso.\n")
+
+    
 
 
 # ============================================================
@@ -221,35 +224,22 @@ def listar_clientes(clientes):
 
     print("\n2 - Lista de clientes cadastrados.")
 
+    #saida informando cliente cadastrado
+    print("Clientes cadastrados: ")
     # Verifica se existe pelo menos um cliente.
     if cliente_cadastrado(clientes):
-
+    
         # Percorre todos os clientes.
         for cliente in clientes:
 
             # Mostra cada cliente.
-            print(f"Cliente cadastrado: {cliente}")
+            print(cliente)
 
     else:
 
         # Se a lista estiver vazia,
         # mostra esta mensagem.
-        print("Não há cliente na lista\n")
-
-
-# ============================================================
-# FUNÇÃO: CONTAR CLIENTES
-# ============================================================
-
-# Essa função deveria mostrar a quantidade de clientes.
-def contar_clientes(clientes):
-
-    # len(clientes) retorna a quantidade de elementos
-    # existentes na lista.
-    quantidade = len(clientes)
-
-    # Mostra a quantidade.
-    print(f"Quantidade de clientes cadastrados: {quantidade}")
+        print("Não há cliente na cadastrado.\n")
 
 
 
@@ -318,6 +308,80 @@ def remover_cliente(clientes):
 
 
 # ============================================================
+# FUNÇÃO: CONTAR CLIENTES
+# ============================================================
+
+# Essa função deveria mostrar a quantidade de clientes.
+def contar_clientes(clientes):
+
+    # len(clientes) retorna a quantidade de elementos
+    # existentes na lista.
+    quantidade = len(clientes)
+
+    # Mostra a quantidade.
+    print(f"Quantidade de clientes cadastrados: {quantidade}")
+
+
+#===================================================
+# FUNÇÃO: ALTERAR CLIENTE
+#===================================================
+
+def alterar_cliente(clientes):
+    print("6 - Alterar cliente")
+
+
+    cliente = ""
+    #enquanto cliente for vazio o loop continua voltando com erro nome vazio e pedindo o cliente que deseja alterar
+    while cliente == "":
+        
+        
+        # Solicitando cliente que será alterado.
+        cliente = input("Qual cliente deseja alterar: ").strip()
+        if cliente == "":
+            print("Erro: Nome vazio")
+    #procurar cliente
+    cliente_alterar = buscar_nome(clientes, cliente)
+
+    # se cliente tiver na busca
+    if cliente_alterar:
+        print(f"Cliente {cliente_alterar} encontrado.")
+        # cadastrar novo cliente
+        novo_cliente = ""
+        while novo_cliente == "":
+            novo_cliente = input("Digite o nome do novo cliente: ").strip()
+            if novo_cliente == "":
+                print("Erro: Nome Vazio")
+
+        novo_nome_encontrado = buscar_nome(clientes, novo_cliente)
+    
+        if novo_nome_encontrado and novo_cliente != cliente_alterar:
+            print(f"Cliente {novo_nome_encontrado} já cadastrado.")
+
+        else:
+            #pecorrendo na lista clientes os indices e nome cadastrados
+            for indice, nome in enumerate(clientes):
+            
+            #se condição nome for igual ao novo cliente informa que novo cliente já possui cadastro
+                if nome == cliente_alterar:
+                    clientes[indice] = novo_cliente
+                    print(f"Cliente alterado de {cliente_alterar} para {novo_cliente} com sucesso.")
+                    break
+                    
+               
+            
+     
+    else:
+        
+        #saida de que o cliente não está na lista
+        print(f"Cliente {cliente} não está cadastrado.")
+        opcao = input("Deseja cadastrar um novo cliente? S/N ").lower().strip()
+        if opcao == 's':
+            print("Estamos te enviando para cadastrar um novo cliente.")
+            return cadastrar_cliente(clientes)
+        
+
+
+# ============================================================
 # LOOP PRINCIPAL DO PROGRAMA
 # ============================================================
 
@@ -331,7 +395,7 @@ def remover_cliente(clientes):
 # 0 != 5 → True
 #
 # Portanto o while começa.
-while opcao != 6:
+while opcao != 7:
 
     # Chama a função que mostra o menu.
     exibir_menu()
@@ -423,7 +487,7 @@ while opcao != 6:
 
 
     # ========================================================
-    # OPÇÃO 5 — SAIR
+    # OPÇÃO 5 — CONTAR CLIENTE
     # ========================================================
 
     elif opcao == 5:
@@ -431,13 +495,17 @@ while opcao != 6:
         # chama a função para saber quantidade de clientes está cadastrados.
         contar_clientes(clientes)
 
-
-    # ========================================================
-    # OPÇÃO 5 — SAIR
-    # ========================================================
-
-    # Verifica se a opção foi 5.
     elif opcao == 6:
+
+        #chamar a função alterar cliente
+        alterar_cliente(clientes)
+
+    # ========================================================
+    # OPÇÃO 7 — SAIR
+    # ========================================================
+
+    # Verifica se a opção foi 7.
+    elif opcao == 7:
 
         # Mostra mensagem de encerramento.
         print("\nObrigado por usar nosso sistema.\n")
